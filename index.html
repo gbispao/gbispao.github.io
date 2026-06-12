@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BLACKROCK LEVEL TERMINAL | Guilherme Menezes</title>
+<title>BlackRock Style Terminal | Guilherme Menezes</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -17,34 +17,34 @@ font-family:Inter;
 }
 
 body{
-background:#000000;
-color:#cfcfcf;
-overflow:hidden;
+background:#000;
+color:#d0d0d0;
+overflow-x:hidden;
 }
 
-/* SUBTLE GRID (BANK STYLE) */
+/* GRID */
 .grid{
 position:fixed;
 inset:0;
 background-image:
 linear-gradient(rgba(0,255,120,0.012) 1px, transparent 1px),
 linear-gradient(90deg, rgba(0,255,120,0.012) 1px, transparent 1px);
-background-size:90px 90px;
+background-size:85px 85px;
 animation:gridMove 60s linear infinite;
 z-index:-5;
 }
 
 @keyframes gridMove{
 from{transform:translateY(0);}
-to{transform:translateY(90px);}
+to{transform:translateY(85px);}
 }
 
 /* BACKGROUND NOISE */
 .noise{
 position:fixed;
 inset:0;
+opacity:0.03;
 background:url("https://grainy-gradients.vercel.app/noise.svg");
-opacity:0.04;
 z-index:-4;
 }
 
@@ -53,7 +53,7 @@ canvas{
 position:fixed;
 inset:0;
 z-index:-6;
-opacity:0.2;
+opacity:0.18;
 }
 
 /* TOP BAR */
@@ -66,8 +66,8 @@ justify-content:space-between;
 padding:10px 20px;
 font-size:11px;
 color:#777;
-border-bottom:1px solid rgba(0,255,120,0.05);
 background:#000;
+border-bottom:1px solid rgba(0,255,120,0.04);
 z-index:999;
 }
 
@@ -78,8 +78,8 @@ top:35px;
 width:100%;
 overflow:hidden;
 white-space:nowrap;
-border-bottom:1px solid rgba(0,255,120,0.04);
 background:#000;
+border-bottom:1px solid rgba(0,255,120,0.03);
 z-index:998;
 }
 
@@ -87,9 +87,9 @@ z-index:998;
 display:inline-block;
 padding:10px;
 font-size:11px;
-color:#6dffb3;
-opacity:0.55;
-animation:scroll 70s linear infinite;
+color:#7CFFB2;
+opacity:0.6;
+animation:scroll 65s linear infinite;
 }
 
 @keyframes scroll{
@@ -97,57 +97,97 @@ from{transform:translateX(100%);}
 to{transform:translateX(-100%);}
 }
 
-/* MAIN GRID */
-.container{
-padding-top:120px;
-max-width:1500px;
+/* HERO */
+.hero{
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:120px 20px;
+}
+
+.glass{
+background:rgba(255,255,255,0.02);
+border:1px solid rgba(0,255,120,0.05);
+padding:40px;
+border-radius:10px;
+backdrop-filter:blur(20px);
+animation:fadeIn 1.5s ease;
+max-width:1000px;
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(20px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+h1{
+font-size:3rem;
+}
+
+h1 span{
+color:#7CFFB2;
+}
+
+.subtitle{
+margin-top:10px;
+color:#9aa0a6;
+}
+
+/* KPI */
+.kpis{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+padding:20px;
+max-width:1100px;
 margin:auto;
 }
 
-/* DASHBOARD LAYOUT */
+.kpi{
+background:rgba(255,255,255,0.02);
+border:1px solid rgba(0,255,120,0.05);
+padding:15px;
+border-radius:6px;
+text-align:center;
+}
+
+.kpi h2{
+color:#7CFFB2;
+font-size:18px;
+}
+
+/* DASHBOARD */
 .dashboard{
 display:grid;
-grid-template-columns:1.6fr 1fr 1fr;
-gap:14px;
+grid-template-columns:1.5fr 1fr 1fr;
+gap:12px;
 padding:20px;
+max-width:1400px;
+margin:auto;
 }
 
 /* PANELS */
 .panel{
 background:rgba(255,255,255,0.015);
-border:1px solid rgba(0,255,120,0.05);
+border:1px solid rgba(0,255,120,0.04);
 border-radius:8px;
 padding:12px;
-min-height:240px;
-position:relative;
-overflow:hidden;
-}
-
-.panel::after{
-content:"";
-position:absolute;
-inset:0;
-background:radial-gradient(circle at center, rgba(0,255,120,0.04), transparent 70%);
-opacity:0;
-transition:0.5s;
-}
-
-.panel:hover::after{
-opacity:1;
+min-height:230px;
 }
 
 .title{
 font-size:10px;
-letter-spacing:1px;
-color:#6dffb3;
+color:#7CFFB2;
 margin-bottom:10px;
-opacity:0.8;
+letter-spacing:1px;
 }
 
 /* CHART */
 canvas{
 width:100%;
-height:200px;
+height:180px;
 }
 
 /* HEATMAP */
@@ -158,7 +198,7 @@ gap:6px;
 }
 
 .box{
-height:45px;
+height:40px;
 border-radius:6px;
 display:flex;
 align-items:center;
@@ -178,29 +218,8 @@ gap:8px;
 }
 
 .news div{
-padding:5px;
 border-left:2px solid rgba(0,255,120,0.1);
-}
-
-/* KPIS */
-.kpis{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:10px;
-padding:20px;
-}
-
-.kpi{
-background:rgba(255,255,255,0.015);
-border:1px solid rgba(0,255,120,0.05);
-padding:12px;
-border-radius:6px;
-text-align:center;
-}
-
-.kpi h2{
-color:#6dffb3;
-font-size:16px;
+padding-left:6px;
 }
 
 /* WHATSAPP */
@@ -210,7 +229,6 @@ bottom:18px;
 right:18px;
 width:52px;
 height:52px;
-filter:brightness(1.2);
 opacity:0.9;
 }
 
@@ -224,19 +242,48 @@ opacity:0.9;
 <canvas id="particles"></canvas>
 
 <div class="topbar">
-<div>BLACKROCK LEVEL TERMINAL — SIMULATION</div>
-<div>GUILHERME MENEZES | QUANT RESEARCH</div>
+<div>BLACKROCK STYLE TERMINAL</div>
+<div>GUILHERME MENEZES | SP, BR</div>
 </div>
 
 <div class="ticker">
 <span>
-SPX +0.42% | NASDAQ +0.31% | IBOV +0.88% | PETR4 +1.2% | VALE3 +0.7% | BTC +2.1% | USD -0.12% | GOLD +0.18%
+PETR4 +1.1% VALE3 +0.7% ITUB4 -0.2% IBOV +0.8% BTC +2.2% SPX +0.4% USD -0.1% GOLD +0.3%
 </span>
 </div>
 
-<div class="container">
+<!-- HERO (EXPANDED PROFILE) -->
+<section class="hero">
+<div class="glass">
 
-<!-- KPIS -->
+<h1>Guilherme <span>Menezes</span></h1>
+
+<div class="subtitle">Economista | Mercado Financeiro | Python | Quant Research</div>
+
+<p style="margin-top:20px; color:#9aa0a6; line-height:1.6; max-width:900px;">
+
+Economista formado, baseado em São Paulo (Brasil), com forte interesse em Mercado Financeiro, Gestão de Risco,
+Análise Quantitativa e Investimentos.
+
+<br><br>
+
+Atuo no desenvolvimento de soluções em Python aplicadas a data analysis, modelagem financeira,
+automação e estudos de mercado.
+
+<br><br>
+
+Foco em equities, macroeconomia, valuation, asset pricing e construção de estratégias orientadas a dados.
+
+<br><br>
+
+Filosofia: decisões baseadas em dados, disciplina e aprendizado contínuo.
+
+</p>
+
+</div>
+</section>
+
+<!-- KPI -->
 <div class="kpis">
 <div class="kpi"><h2 id="a">0</h2><p>ALPHA</p></div>
 <div class="kpi"><h2 id="b">0</h2><p>SHARPE</p></div>
@@ -247,29 +294,24 @@ SPX +0.42% | NASDAQ +0.31% | IBOV +0.88% | PETR4 +1.2% | VALE3 +0.7% | BTC +2.1%
 <!-- DASHBOARD -->
 <div class="dashboard">
 
-<!-- MARKET -->
 <div class="panel">
-<div class="title">MARKET STRUCTURE</div>
+<div class="title">MARKET CHART</div>
 <canvas id="chart"></canvas>
 </div>
 
-<!-- HEATMAP -->
 <div class="panel">
-<div class="title">GLOBAL EQUITY HEATMAP</div>
+<div class="title">HEATMAP</div>
 <div class="heatmap" id="heat"></div>
 </div>
 
-<!-- NEWS -->
 <div class="panel">
-<div class="title">MACRO NEWS FLOW</div>
+<div class="title">NEWS FLOW</div>
 <div class="news">
-<div>US inflation data signals policy shift</div>
-<div>Brazil banks outperform global peers</div>
-<div>Energy sector volatility increases</div>
-<div>Tech sector stabilizes after correction</div>
+<div>Inflation data impacts global equities</div>
+<div>Brazil banks outperform sector</div>
+<div>Tech stabilizes after volatility</div>
+<div>Oil reacts to supply constraints</div>
 </div>
-</div>
-
 </div>
 
 </div>
@@ -282,20 +324,20 @@ SPX +0.42% | NASDAQ +0.31% | IBOV +0.88% | PETR4 +1.2% | VALE3 +0.7% | BTC +2.1%
 <script>
 
 /* KPIs */
-function count(id,v){
+function count(id,val){
 let el=document.getElementById(id);
 let i=0;
 let t=setInterval(()=>{
-i+=v/120;
-if(i>=v){i=v;clearInterval(t);}
+i+=val/120;
+if(i>=val){i=val;clearInterval(t);}
 el.innerText=i.toFixed(2);
 },25);
 }
 
-count("a",1.72);
-count("b",1.41);
-count("c",11.8);
-count("d",7.6);
+count("a",1.83);
+count("b",1.42);
+count("c",11.9);
+count("d",8.1);
 
 /* HEATMAP */
 const stocks=["PETR4","VALE3","ITUB4","BBDC4","BBAS3","WEGE3","MGLU3","B3SA3"];
@@ -315,7 +357,7 @@ v>0.5
 document.getElementById("heat").appendChild(d);
 });
 
-/* CHART (SLOW REAL MARKET BEHAVIOR) */
+/* CHART */
 const c=document.getElementById("chart").getContext("2d");
 
 let data=Array.from({length:80},()=>50);
@@ -324,16 +366,16 @@ function draw(){
 
 c.clearRect(0,0,800,200);
 
-data.push(50 + Math.sin(Date.now()/4000)*6 + Math.random()*2);
+data.push(50 + Math.sin(Date.now()/4500)*5 + Math.random()*2);
 data.shift();
 
 c.beginPath();
-c.strokeStyle="#6dffb3";
+c.strokeStyle="#7CFFB2";
 c.lineWidth=0.8;
 
 data.forEach((v,i)=>{
 let x=i*10;
-let y=150-v;
+let y=140-v;
 
 if(i===0)c.moveTo(x,y);
 else c.lineTo(x,y);
@@ -341,7 +383,7 @@ else c.lineTo(x,y);
 
 c.stroke();
 
-setTimeout(draw,220);
+setTimeout(draw,250);
 }
 
 draw();
@@ -355,13 +397,13 @@ canvas.height=innerHeight;
 
 let particles=[];
 
-for(let i=0;i<40;i++){
+for(let i=0;i<35;i++){
 particles.push({
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
 r:Math.random()*1,
-dx:(Math.random()-0.5)*0.15,
-dy:(Math.random()-0.5)*0.15
+dx:(Math.random()-0.5)*0.12,
+dy:(Math.random()-0.5)*0.12
 });
 }
 
@@ -372,7 +414,7 @@ particles.forEach(p=>{
 p.x+=p.dx;
 p.y+=p.dy;
 
-ctx.fillStyle="rgba(109,255,179,0.15)";
+ctx.fillStyle="rgba(124,255,178,0.12)";
 ctx.beginPath();
 ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
 ctx.fill();
