@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bloomberg Style Portfolio | Guilherme Menezes</title>
+<title>Quant Terminal | Guilherme Menezes</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
@@ -17,29 +17,34 @@ font-family:Inter;
 }
 
 body{
-background:#050816;
-color:#fff;
+background:#02040a;
+color:#e6e6e6;
 overflow-x:hidden;
 }
 
-/* BACKGROUND */
-canvas#particles{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-z-index:-3;
-}
-
-.bg-gradient{
+/* subtle animated grid */
+.grid{
 position:fixed;
 inset:0;
-background:
-radial-gradient(circle at 20% 20%, #00ff8833, transparent 40%),
-radial-gradient(circle at 80% 70%, #00c89622, transparent 40%),
-#050816;
+background-image:
+linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
+linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
+background-size:60px 60px;
+animation:moveGrid 20s linear infinite;
 z-index:-2;
+}
+
+@keyframes moveGrid{
+0%{transform:translateY(0);}
+100%{transform:translateY(60px);}
+}
+
+/* darker particles canvas */
+canvas#particles{
+position:fixed;
+inset:0;
+z-index:-3;
+opacity:0.4;
 }
 
 /* TICKER */
@@ -47,20 +52,21 @@ z-index:-2;
 position:fixed;
 top:0;
 width:100%;
-background:rgba(0,0,0,.6);
-backdrop-filter:blur(10px);
-border-bottom:1px solid #00ff8833;
-white-space:nowrap;
+background:rgba(0,0,0,0.8);
+border-bottom:1px solid rgba(0,255,136,0.15);
 overflow:hidden;
+white-space:nowrap;
 z-index:999;
+backdrop-filter:blur(10px);
 }
 
 .ticker span{
 display:inline-block;
-padding:10px 40px;
-color:#00ff88;
-font-weight:600;
-animation:scroll 25s linear infinite;
+padding:12px 40px;
+color:#7CFFB2;
+font-weight:500;
+animation:scroll 35s linear infinite;
+opacity:0.8;
 }
 
 @keyframes scroll{
@@ -72,7 +78,6 @@ animation:scroll 25s linear infinite;
 .hero{
 min-height:100vh;
 display:flex;
-flex-direction:column;
 justify-content:center;
 align-items:center;
 text-align:center;
@@ -80,49 +85,79 @@ padding:100px 20px;
 }
 
 .glass{
-background:rgba(255,255,255,0.05);
-border:1px solid rgba(255,255,255,0.1);
-backdrop-filter:blur(12px);
-border-radius:20px;
-padding:30px;
+background:rgba(255,255,255,0.03);
+border:1px solid rgba(0,255,136,0.08);
+backdrop-filter:blur(18px);
+border-radius:18px;
+padding:40px;
+box-shadow:0 0 60px rgba(0,255,136,0.05);
+animation:fadeIn 2s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(20px);}
+to{opacity:1;transform:translateY(0);}
 }
 
 h1{
-font-size:3.5rem;
+font-size:3.2rem;
+font-weight:800;
 }
 
 h1 span{
-color:#00ff88;
+color:#7CFFB2;
+text-shadow:0 0 15px rgba(0,255,136,0.2);
 }
 
 .subtitle{
-color:#aaa;
-margin-top:10px;
-font-size:1.2rem;
+margin-top:15px;
+color:#9aa0a6;
 min-height:30px;
+font-size:1.1rem;
 }
 
-/* KPIs */
+/* KPI */
 .kpis{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:20px;
 padding:60px 20px;
-max-width:1200px;
+max-width:1100px;
 margin:auto;
 }
 
 .kpi{
-background:rgba(255,255,255,.04);
-border:1px solid rgba(255,255,255,.1);
-padding:20px;
-border-radius:15px;
+background:rgba(255,255,255,0.02);
+border:1px solid rgba(0,255,136,0.08);
+padding:25px;
+border-radius:14px;
 text-align:center;
+transition:0.4s;
+position:relative;
+overflow:hidden;
+}
+
+.kpi::after{
+content:'';
+position:absolute;
+inset:0;
+background:radial-gradient(circle at center, rgba(0,255,136,0.08), transparent 70%);
+opacity:0;
+transition:0.5s;
+}
+
+.kpi:hover::after{
+opacity:1;
+}
+
+.kpi:hover{
+transform:translateY(-5px);
+border-color:rgba(0,255,136,0.2);
 }
 
 .kpi h2{
-color:#00ff88;
-font-size:2rem;
+color:#7CFFB2;
+font-size:2.2rem;
 }
 
 /* CHART */
@@ -130,9 +165,9 @@ font-size:2rem;
 max-width:900px;
 margin:60px auto;
 padding:20px;
-background:rgba(255,255,255,.04);
-border-radius:15px;
-border:1px solid rgba(255,255,255,.1);
+background:rgba(255,255,255,0.02);
+border:1px solid rgba(0,255,136,0.08);
+border-radius:14px;
 }
 
 canvas{
@@ -144,14 +179,27 @@ height:300px;
 .terminal{
 max-width:900px;
 margin:60px auto;
-background:black;
-border:1px solid #00ff8833;
+background:#000;
+border:1px solid rgba(0,255,136,0.15);
 border-radius:10px;
 padding:20px;
 font-family:monospace;
-color:#00ff88;
-height:250px;
+color:#7CFFB2;
+height:260px;
 overflow:hidden;
+position:relative;
+}
+
+.cursor{
+display:inline-block;
+width:8px;
+background:#7CFFB2;
+margin-left:4px;
+animation:blink 1s infinite;
+}
+
+@keyframes blink{
+50%{opacity:0;}
 }
 
 /* SKILLS */
@@ -166,17 +214,30 @@ margin-bottom:15px;
 }
 
 .bar{
-height:10px;
-background:#111;
+height:8px;
+background:#0b0f14;
 border-radius:10px;
 overflow:hidden;
+border:1px solid rgba(0,255,136,0.05);
 }
 
 .fill{
-height:10px;
-background:#00ff88;
+height:100%;
 width:0;
-transition:2s;
+background:linear-gradient(90deg,#0aff9d,#00ff88);
+transition:2.5s;
+}
+
+/* fade scroll */
+.fade{
+opacity:0;
+transform:translateY(25px);
+transition:1.2s;
+}
+
+.fade.show{
+opacity:1;
+transform:translateY(0);
 }
 
 /* WHATSAPP */
@@ -184,31 +245,23 @@ transition:2s;
 position:fixed;
 bottom:20px;
 right:20px;
-width:60px;
-height:60px;
+width:58px;
+height:58px;
 border-radius:50%;
 background:#25D366;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:30px;
-color:white;
-cursor:pointer;
-box-shadow:0 0 20px #25d36666;
-animation:pulse 2s infinite;
+font-size:28px;
+box-shadow:0 0 25px rgba(37,211,102,0.25);
+animation:pulse 2.5s infinite;
 z-index:999;
 }
 
 @keyframes pulse{
 0%{transform:scale(1);}
-50%{transform:scale(1.1);}
+50%{transform:scale(1.08);}
 100%{transform:scale(1);}
-}
-
-footer{
-text-align:center;
-padding:50px;
-color:#777;
 }
 
 </style>
@@ -216,48 +269,39 @@ color:#777;
 
 <body>
 
+<div class="grid"></div>
 <canvas id="particles"></canvas>
 
-<div class="bg-gradient"></div>
-
-<!-- TICKER -->
 <div class="ticker">
 <span>
-PETR4 ▲ 2.1% &nbsp;&nbsp; VALE3 ▲ 1.8% &nbsp;&nbsp; ITUB4 ▼ 0.4% &nbsp;&nbsp;
-IBOV ▲ 1.2% &nbsp;&nbsp; BTC ▲ 3.5% &nbsp;&nbsp; SP500 ▲ 0.9% &nbsp;&nbsp;
-DOLAR ▼ 0.3% &nbsp;&nbsp; NASDAQ ▲ 1.1%
+PETR4 ▲ 1.2% • VALE3 ▲ 0.8% • ITUB4 ▼ 0.3% • IBOV ▲ 0.9% • BTC ▲ 2.1% • SP500 ▲ 0.4% • USD ▼ 0.2%
 </span>
 </div>
 
-<!-- HERO -->
 <section class="hero">
 <div class="glass">
 <h1>Guilherme <span>Menezes</span></h1>
 <div class="subtitle" id="typing"></div>
-<p style="max-width:700px;margin-top:20px;color:#aaa;">
-Economista | Mercado Financeiro | Investimentos | Python | Data Analytics
+<p style="margin-top:20px;color:#8b949e;max-width:700px;">
+Economia • Mercado Financeiro • Python • Data Analytics • Quant Research
 </p>
 </div>
 </section>
 
-<!-- KPIS -->
-<section class="kpis">
+<section class="kpis fade">
 <div class="kpi"><h2 id="k1">0</h2><p>Projetos</p></div>
-<div class="kpi"><h2 id="k2">0</h2><p>Modelos Financeiros</p></div>
-<div class="kpi"><h2 id="k3">0</h2><p>Scripts Python</p></div>
-<div class="kpi"><h2 id="k4">0</h2><p>Estudos de Mercado</p></div>
+<div class="kpi"><h2 id="k2">0</h2><p>Modelos</p></div>
+<div class="kpi"><h2 id="k3">0</h2><p>Scripts</p></div>
+<div class="kpi"><h2 id="k4">0</h2><p>Backtests</p></div>
 </section>
 
-<!-- CHART -->
-<div class="chart">
+<div class="chart fade">
 <canvas id="chart"></canvas>
 </div>
 
-<!-- TERMINAL -->
-<div class="terminal" id="terminal"></div>
+<div class="terminal fade" id="terminal"></div>
 
-<!-- SKILLS -->
-<div class="skills">
+<div class="skills fade">
 
 <div class="skill">
 <p>Python</p>
@@ -271,137 +315,120 @@ Economista | Mercado Financeiro | Investimentos | Python | Data Analytics
 
 <div class="skill">
 <p>Finance</p>
-<div class="bar"><div class="fill" data="95%"></div></div>
+<div class="bar"><div class="fill" data="92%"></div></div>
 </div>
 
 </div>
 
-<footer>
-📊 Transformando dados em decisões financeiras
-</footer>
-
-<!-- WHATSAPP -->
-<a class="whatsapp" href="https://wa.me/5511981503387" target="_blank">
-💬
-</a>
+<a class="whatsapp" href="https://wa.me/5511981503387">💬</a>
 
 <script>
 
-/* TYPING */
-const texts = [
-"Mercado Financeiro",
-"Data Analytics",
+/* typing slower (more premium feel) */
+const texts=[
+"Market Analyst",
+"Quant Finance",
 "Python Developer",
-"Investimentos",
-"Quant Finance"
+"Data Analytics",
+"Investment Research"
 ];
 
-let i=0;
-let j=0;
-let current="";
-let isDeleting=false;
+let i=0,j=0,del=false;
 
 function type(){
-current = texts[i];
+let txt=texts[i];
 
-if(!isDeleting){
+if(!del){
 j++;
-document.getElementById("typing").innerText=current.substring(0,j);
-if(j==current.length){
-isDeleting=true;
-setTimeout(type,1000);
-return;
-}
+document.getElementById("typing").innerText=txt.slice(0,j);
+if(j===txt.length){del=true;setTimeout(type,1400);return;}
 }else{
 j--;
-document.getElementById("typing").innerText=current.substring(0,j);
-if(j==0){
-isDeleting=false;
-i=(i+1)%texts.length;
-}
+document.getElementById("typing").innerText=txt.slice(0,j);
+if(j===0){del=false;i=(i+1)%texts.length;}
 }
 
-setTimeout(type,80);
+setTimeout(type,90);
 }
 type();
 
-/* KPIs */
-function animate(id, target){
+/* KPIs slower + smoother */
+function count(id,target){
 let el=document.getElementById(id);
 let c=0;
-let step=target/100;
-let interval=setInterval(()=>{
-c+=step;
-if(c>=target){
-c=target;
-clearInterval(interval);
-}
+let inc=target/120;
+
+let t=setInterval(()=>{
+c+=inc;
+if(c>=target){c=target;clearInterval(t);}
 el.innerText=Math.floor(c);
-},20);
+},30);
 }
 
-animate("k1",12);
-animate("k2",8);
-animate("k3",35);
-animate("k4",20);
+count("k1",14);
+count("k2",9);
+count("k3",42);
+count("k4",18);
 
 /* SKILLS */
 setTimeout(()=>{
 document.querySelectorAll(".fill").forEach(f=>{
 f.style.width=f.getAttribute("data");
 });
-},1000);
+},1200);
 
-/* TERMINAL */
+/* TERMINAL slow + realistic */
 const lines=[
-"> python backtest.py",
-"Running strategy...",
-"Sharpe Ratio: 1.42",
-"Max Drawdown: -8.3%",
-"Loading market data...",
-"✔ Strategy optimized"
+"> loading market data...",
+"> running backtest...",
+"Sharpe Ratio: 1.38",
+"Max Drawdown: -7.9%",
+"Volatility: 12.4%",
+"> optimizing strategy...",
+"✔ ready"
 ];
 
 let t=0;
 function terminal(){
 if(t<lines.length){
-document.getElementById("terminal").innerHTML += lines[t] + "<br>";
+document.getElementById("terminal").innerHTML+=lines[t]+"<br>";
 t++;
-setTimeout(terminal,800);
+setTimeout(terminal,1100);
 }
 }
 terminal();
 
-/* PARTICLES */
+/* particles slower + darker */
 const canvas=document.getElementById("particles");
 const ctx=canvas.getContext("2d");
 
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
+canvas.width=innerWidth;
+canvas.height=innerHeight;
 
 let particles=[];
 
-for(let i=0;i<80;i++){
+for(let i=0;i<60;i++){
 particles.push({
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
-r:Math.random()*2,
-dx:(Math.random()-0.5),
-dy:(Math.random()-0.5)
+r:Math.random()*1.5,
+dx:(Math.random()-0.5)*0.3,
+dy:(Math.random()-0.5)*0.3
 });
 }
 
 function draw(){
 ctx.clearRect(0,0,canvas.width,canvas.height);
 
-ctx.fillStyle="#00ff88";
-
 particles.forEach(p=>{
 p.x+=p.dx;
 p.y+=p.dy;
 
-if(p.x<0||p.x>canvas.width)p.dx*=-1;
-if(p.y<0||p.y>canvas.height)p.dy*=-1;
+if(p.x<0)p.x=canvas.width;
+if(p.y<0)p.y=canvas.height;
+
+ctx.fillStyle="#0aff9d";
+ctx.globalAlpha=0.25;
 
 ctx.beginPath();
 ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
@@ -413,38 +440,44 @@ requestAnimationFrame(draw);
 
 draw();
 
-/* CHART */
-const chart=document.getElementById("chart");
-const c=chart.getContext("2d");
-
-chart.width=900;
-chart.height=300;
-
-let data=Array.from({length:50},()=>Math.random()*100);
+/* chart MUCH slower */
+const c=document.getElementById("chart").getContext("2d");
+let data=Array.from({length:80},()=>50);
 
 function drawChart(){
-c.clearRect(0,0,chart.width,chart.height);
 
-c.beginPath();
-c.strokeStyle="#00ff88";
-c.lineWidth=2;
+c.clearRect(0,0,900,300);
 
-data.push(Math.random()*100);
+data.push(50+Math.sin(Date.now()/3000)*20+Math.random()*5);
 data.shift();
 
-data.forEach((v,i)=>{
-let x=i*(chart.width/50);
-let y=chart.height-v*2;
+c.beginPath();
+c.strokeStyle="#7CFFB2";
+c.lineWidth=1.5;
 
-if(i==0)c.moveTo(x,y);
+data.forEach((v,i)=>{
+let x=i*(900/80);
+let y=300-v*2;
+
+if(i===0)c.moveTo(x,y);
 else c.lineTo(x,y);
 });
 
 c.stroke();
-requestAnimationFrame(drawChart);
+
+setTimeout(drawChart,120); // SLOW MARKET FEEL
 }
 
 drawChart();
+
+/* fade scroll */
+const obs=new IntersectionObserver(e=>{
+e.forEach(x=>{
+if(x.isIntersecting)x.target.classList.add("show");
+});
+});
+
+document.querySelectorAll(".fade").forEach(el=>obs.observe(el));
 
 </script>
 
