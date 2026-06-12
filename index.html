@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quant Terminal | Guilherme Menezes</title>
+<title>Hedge Fund Terminal | Guilherme Menezes</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
@@ -17,227 +17,164 @@ font-family:Inter;
 }
 
 body{
-background:#02040a;
-color:#e6e6e6;
+background:#000000;
+color:#d6d6d6;
 overflow-x:hidden;
 }
 
-/* subtle animated grid */
+/* GLOBAL GRID (VERY SUBTLE) */
 .grid{
 position:fixed;
 inset:0;
 background-image:
-linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
-linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
-background-size:60px 60px;
-animation:moveGrid 20s linear infinite;
-z-index:-2;
+linear-gradient(rgba(0,255,120,0.015) 1px, transparent 1px),
+linear-gradient(90deg, rgba(0,255,120,0.015) 1px, transparent 1px);
+background-size:80px 80px;
+z-index:-3;
+animation:move 40s linear infinite;
 }
 
-@keyframes moveGrid{
-0%{transform:translateY(0);}
-100%{transform:translateY(60px);}
+@keyframes move{
+from{transform:translateY(0);}
+to{transform:translateY(80px);}
 }
 
-/* darker particles canvas */
-canvas#particles{
+/* PARTICLES */
+canvas{
 position:fixed;
 inset:0;
-z-index:-3;
-opacity:0.4;
+z-index:-4;
+opacity:0.25;
+}
+
+/* TOP BAR */
+.topbar{
+position:fixed;
+top:0;
+width:100%;
+background:rgba(0,0,0,0.85);
+border-bottom:1px solid rgba(0,255,120,0.08);
+padding:10px 20px;
+display:flex;
+justify-content:space-between;
+font-size:12px;
+color:#8a8a8a;
+z-index:999;
 }
 
 /* TICKER */
 .ticker{
 position:fixed;
-top:0;
+top:40px;
 width:100%;
-background:rgba(0,0,0,0.8);
-border-bottom:1px solid rgba(0,255,136,0.15);
-overflow:hidden;
 white-space:nowrap;
-z-index:999;
-backdrop-filter:blur(10px);
+overflow:hidden;
+border-bottom:1px solid rgba(0,255,120,0.06);
+background:#000;
+z-index:998;
 }
 
 .ticker span{
 display:inline-block;
-padding:12px 40px;
+padding:10px;
 color:#7CFFB2;
-font-weight:500;
-animation:scroll 35s linear infinite;
-opacity:0.8;
+opacity:0.6;
+animation:scroll 55s linear infinite;
+font-size:12px;
 }
 
 @keyframes scroll{
-0%{transform:translateX(100%);}
-100%{transform:translateX(-100%);}
+from{transform:translateX(100%);}
+to{transform:translateX(-100%);}
 }
 
-/* HERO */
-.hero{
-min-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-text-align:center;
-padding:100px 20px;
+/* LAYOUT */
+.container{
+padding-top:110px;
+max-width:1400px;
+margin:auto;
 }
 
-.glass{
-background:rgba(255,255,255,0.03);
-border:1px solid rgba(0,255,136,0.08);
-backdrop-filter:blur(18px);
-border-radius:18px;
-padding:40px;
-box-shadow:0 0 60px rgba(0,255,136,0.05);
-animation:fadeIn 2s ease;
+/* GRID DASHBOARD */
+.dashboard{
+display:grid;
+grid-template-columns:1.4fr 1fr 1fr;
+gap:18px;
+padding:20px;
 }
 
-@keyframes fadeIn{
-from{opacity:0;transform:translateY(20px);}
-to{opacity:1;transform:translateY(0);}
+/* PANELS */
+.panel{
+background:rgba(255,255,255,0.02);
+border:1px solid rgba(0,255,120,0.06);
+border-radius:10px;
+padding:15px;
+min-height:220px;
 }
 
-h1{
-font-size:3.2rem;
-font-weight:800;
-}
-
-h1 span{
+.panel h3{
+font-size:12px;
 color:#7CFFB2;
-text-shadow:0 0 15px rgba(0,255,136,0.2);
+margin-bottom:10px;
+letter-spacing:1px;
 }
 
-.subtitle{
-margin-top:15px;
-color:#9aa0a6;
-min-height:30px;
-font-size:1.1rem;
+/* CHART */
+canvas.chart{
+width:100%;
+height:180px;
 }
 
-/* KPI */
+/* HEATMAP */
+.heatmap{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:6px;
+}
+
+.box{
+height:40px;
+font-size:10px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:6px;
+color:#000;
+font-weight:600;
+}
+
+/* NEWS */
+.news{
+display:flex;
+flex-direction:column;
+gap:8px;
+font-size:11px;
+color:#aaa;
+}
+
+.news div{
+padding:6px;
+border-left:2px solid rgba(0,255,120,0.2);
+}
+
+/* KPIs */
 .kpis{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
-padding:60px 20px;
-max-width:1100px;
-margin:auto;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+padding:20px;
 }
 
 .kpi{
 background:rgba(255,255,255,0.02);
-border:1px solid rgba(0,255,136,0.08);
-padding:25px;
-border-radius:14px;
-text-align:center;
-transition:0.4s;
-position:relative;
-overflow:hidden;
-}
-
-.kpi::after{
-content:'';
-position:absolute;
-inset:0;
-background:radial-gradient(circle at center, rgba(0,255,136,0.08), transparent 70%);
-opacity:0;
-transition:0.5s;
-}
-
-.kpi:hover::after{
-opacity:1;
-}
-
-.kpi:hover{
-transform:translateY(-5px);
-border-color:rgba(0,255,136,0.2);
+padding:12px;
+border-radius:8px;
+border:1px solid rgba(0,255,120,0.05);
 }
 
 .kpi h2{
 color:#7CFFB2;
-font-size:2.2rem;
-}
-
-/* CHART */
-.chart{
-max-width:900px;
-margin:60px auto;
-padding:20px;
-background:rgba(255,255,255,0.02);
-border:1px solid rgba(0,255,136,0.08);
-border-radius:14px;
-}
-
-canvas{
-width:100%;
-height:300px;
-}
-
-/* TERMINAL */
-.terminal{
-max-width:900px;
-margin:60px auto;
-background:#000;
-border:1px solid rgba(0,255,136,0.15);
-border-radius:10px;
-padding:20px;
-font-family:monospace;
-color:#7CFFB2;
-height:260px;
-overflow:hidden;
-position:relative;
-}
-
-.cursor{
-display:inline-block;
-width:8px;
-background:#7CFFB2;
-margin-left:4px;
-animation:blink 1s infinite;
-}
-
-@keyframes blink{
-50%{opacity:0;}
-}
-
-/* SKILLS */
-.skills{
-max-width:900px;
-margin:auto;
-padding:40px 20px;
-}
-
-.skill{
-margin-bottom:15px;
-}
-
-.bar{
-height:8px;
-background:#0b0f14;
-border-radius:10px;
-overflow:hidden;
-border:1px solid rgba(0,255,136,0.05);
-}
-
-.fill{
-height:100%;
-width:0;
-background:linear-gradient(90deg,#0aff9d,#00ff88);
-transition:2.5s;
-}
-
-/* fade scroll */
-.fade{
-opacity:0;
-transform:translateY(25px);
-transition:1.2s;
-}
-
-.fade.show{
-opacity:1;
-transform:translateY(0);
+font-size:18px;
 }
 
 /* WHATSAPP */
@@ -245,23 +182,9 @@ transform:translateY(0);
 position:fixed;
 bottom:20px;
 right:20px;
-width:58px;
-height:58px;
-border-radius:50%;
-background:#25D366;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:28px;
-box-shadow:0 0 25px rgba(37,211,102,0.25);
-animation:pulse 2.5s infinite;
+width:50px;
+height:50px;
 z-index:999;
-}
-
-@keyframes pulse{
-0%{transform:scale(1);}
-50%{transform:scale(1.08);}
-100%{transform:scale(1);}
 }
 
 </style>
@@ -270,194 +193,120 @@ z-index:999;
 <body>
 
 <div class="grid"></div>
-<canvas id="particles"></canvas>
+
+<div class="topbar">
+<div>HEDGE FUND TERMINAL — LIVE SIMULATION</div>
+<div>GUILHERME MENEZES | SP, BR</div>
+</div>
 
 <div class="ticker">
 <span>
-PETR4 ▲ 1.2% • VALE3 ▲ 0.8% • ITUB4 ▼ 0.3% • IBOV ▲ 0.9% • BTC ▲ 2.1% • SP500 ▲ 0.4% • USD ▼ 0.2%
+PETR4 +1.2% VALE3 +0.8% ITUB4 -0.3% IBOV +0.9% BTC +2.4% SPX +0.6% USD -0.2% GOLD +0.3%
 </span>
 </div>
 
-<section class="hero">
-<div class="glass">
-<h1>Guilherme <span>Menezes</span></h1>
-<div class="subtitle" id="typing"></div>
-<p style="margin-top:20px;color:#8b949e;max-width:700px;">
-Economia • Mercado Financeiro • Python • Data Analytics • Quant Research
-</p>
+<div class="container">
+
+<!-- KPIs -->
+<div class="kpis">
+<div class="kpi"><h2 id="a">0</h2><p>Alpha</p></div>
+<div class="kpi"><h2 id="b">0</h2><p>Sharpe</p></div>
+<div class="kpi"><h2 id="c">0</h2><p>Vol</p></div>
+<div class="kpi"><h2 id="d">0</h2><p>Return</p></div>
 </div>
-</section>
 
-<section class="kpis fade">
-<div class="kpi"><h2 id="k1">0</h2><p>Projetos</p></div>
-<div class="kpi"><h2 id="k2">0</h2><p>Modelos</p></div>
-<div class="kpi"><h2 id="k3">0</h2><p>Scripts</p></div>
-<div class="kpi"><h2 id="k4">0</h2><p>Backtests</p></div>
-</section>
+<!-- DASHBOARD -->
+<div class="dashboard">
 
-<div class="chart fade">
+<!-- CHART -->
+<div class="panel">
+<h3>MARKET PRICE ACTION</h3>
 <canvas id="chart"></canvas>
 </div>
 
-<div class="terminal fade" id="terminal"></div>
-
-<div class="skills fade">
-
-<div class="skill">
-<p>Python</p>
-<div class="bar"><div class="fill" data="90%"></div></div>
+<!-- HEATMAP -->
+<div class="panel">
+<h3>SECTOR HEATMAP</h3>
+<div class="heatmap" id="heat"></div>
 </div>
 
-<div class="skill">
-<p>Data Analysis</p>
-<div class="bar"><div class="fill" data="85%"></div></div>
+<!-- NEWS -->
+<div class="panel">
+<h3>MARKET NEWS FLOW</h3>
+<div class="news">
+<div>Inflation data impacts global equities</div>
+<div>Brazil banks outperform index</div>
+<div>Tech stocks stabilize after volatility</div>
+<div>Oil prices react to supply shift</div>
+</div>
 </div>
 
-<div class="skill">
-<p>Finance</p>
-<div class="bar"><div class="fill" data="92%"></div></div>
 </div>
 
 </div>
 
-<a class="whatsapp" href="https://wa.me/5511981503387">💬</a>
+<!-- WHATSAPP -->
+<a href="https://wa.me/5511981503387">
+<img class="whatsapp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
+</a>
 
 <script>
 
-/* typing slower (more premium feel) */
-const texts=[
-"Market Analyst",
-"Quant Finance",
-"Python Developer",
-"Data Analytics",
-"Investment Research"
-];
-
-let i=0,j=0,del=false;
-
-function type(){
-let txt=texts[i];
-
-if(!del){
-j++;
-document.getElementById("typing").innerText=txt.slice(0,j);
-if(j===txt.length){del=true;setTimeout(type,1400);return;}
-}else{
-j--;
-document.getElementById("typing").innerText=txt.slice(0,j);
-if(j===0){del=false;i=(i+1)%texts.length;}
-}
-
-setTimeout(type,90);
-}
-type();
-
-/* KPIs slower + smoother */
-function count(id,target){
+/* KPI COUNTER */
+function count(id,val){
 let el=document.getElementById(id);
-let c=0;
-let inc=target/120;
-
+let i=0;
 let t=setInterval(()=>{
-c+=inc;
-if(c>=target){c=target;clearInterval(t);}
-el.innerText=Math.floor(c);
-},30);
+i+=val/100;
+if(i>=val){i=val;clearInterval(t);}
+el.innerText=i.toFixed(1);
+},20);
 }
 
-count("k1",14);
-count("k2",9);
-count("k3",42);
-count("k4",18);
+count("a",1.8);
+count("b",1.4);
+count("c",12.3);
+count("d",8.7);
 
-/* SKILLS */
-setTimeout(()=>{
-document.querySelectorAll(".fill").forEach(f=>{
-f.style.width=f.getAttribute("data");
+/* HEATMAP */
+const stocks=["PETR4","VALE3","ITUB4","BBDC4","BBAS3","WEGE3","MGLU3","B3SA3"];
+
+const heat=document.getElementById("heat");
+
+stocks.forEach(s=>{
+let d=document.createElement("div");
+let v=Math.random();
+
+d.className="box";
+d.innerText=s;
+
+d.style.background =
+v>0.5
+?`rgba(0,255,120,${v})`
+:`rgba(255,50,50,${v})`;
+
+heat.appendChild(d);
 });
-},1200);
 
-/* TERMINAL slow + realistic */
-const lines=[
-"> loading market data...",
-"> running backtest...",
-"Sharpe Ratio: 1.38",
-"Max Drawdown: -7.9%",
-"Volatility: 12.4%",
-"> optimizing strategy...",
-"✔ ready"
-];
+/* CHART (SLOW REALISTIC MOVE) */
+const c=document.getElementById("chart").getContext("2d");
 
-let t=0;
-function terminal(){
-if(t<lines.length){
-document.getElementById("terminal").innerHTML+=lines[t]+"<br>";
-t++;
-setTimeout(terminal,1100);
-}
-}
-terminal();
-
-/* particles slower + darker */
-const canvas=document.getElementById("particles");
-const ctx=canvas.getContext("2d");
-
-canvas.width=innerWidth;
-canvas.height=innerHeight;
-
-let particles=[];
-
-for(let i=0;i<60;i++){
-particles.push({
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-r:Math.random()*1.5,
-dx:(Math.random()-0.5)*0.3,
-dy:(Math.random()-0.5)*0.3
-});
-}
+let data=Array.from({length:60},()=>50);
 
 function draw(){
-ctx.clearRect(0,0,canvas.width,canvas.height);
 
-particles.forEach(p=>{
-p.x+=p.dx;
-p.y+=p.dy;
+c.clearRect(0,0,600,200);
 
-if(p.x<0)p.x=canvas.width;
-if(p.y<0)p.y=canvas.height;
-
-ctx.fillStyle="#0aff9d";
-ctx.globalAlpha=0.25;
-
-ctx.beginPath();
-ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-ctx.fill();
-});
-
-requestAnimationFrame(draw);
-}
-
-draw();
-
-/* chart MUCH slower */
-const c=document.getElementById("chart").getContext("2d");
-let data=Array.from({length:80},()=>50);
-
-function drawChart(){
-
-c.clearRect(0,0,900,300);
-
-data.push(50+Math.sin(Date.now()/3000)*20+Math.random()*5);
+data.push(50 + Math.sin(Date.now()/3000)*8 + Math.random()*3);
 data.shift();
 
 c.beginPath();
 c.strokeStyle="#7CFFB2";
-c.lineWidth=1.5;
+c.lineWidth=1;
 
 data.forEach((v,i)=>{
-let x=i*(900/80);
-let y=300-v*2;
+let x=i*10;
+let y=150-v;
 
 if(i===0)c.moveTo(x,y);
 else c.lineTo(x,y);
@@ -465,19 +314,10 @@ else c.lineTo(x,y);
 
 c.stroke();
 
-setTimeout(drawChart,120); // SLOW MARKET FEEL
+setTimeout(draw,180);
 }
 
-drawChart();
-
-/* fade scroll */
-const obs=new IntersectionObserver(e=>{
-e.forEach(x=>{
-if(x.isIntersecting)x.target.classList.add("show");
-});
-});
-
-document.querySelectorAll(".fade").forEach(el=>obs.observe(el));
+draw();
 
 </script>
 
