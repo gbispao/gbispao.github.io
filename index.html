@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hedge Fund Terminal | Guilherme Menezes</title>
+<title>BLACKROCK LEVEL TERMINAL | Guilherme Menezes</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 
@@ -18,33 +18,42 @@ font-family:Inter;
 
 body{
 background:#000000;
-color:#d6d6d6;
-overflow-x:hidden;
+color:#cfcfcf;
+overflow:hidden;
 }
 
-/* GLOBAL GRID (VERY SUBTLE) */
+/* SUBTLE GRID (BANK STYLE) */
 .grid{
 position:fixed;
 inset:0;
 background-image:
-linear-gradient(rgba(0,255,120,0.015) 1px, transparent 1px),
-linear-gradient(90deg, rgba(0,255,120,0.015) 1px, transparent 1px);
-background-size:80px 80px;
-z-index:-3;
-animation:move 40s linear infinite;
+linear-gradient(rgba(0,255,120,0.012) 1px, transparent 1px),
+linear-gradient(90deg, rgba(0,255,120,0.012) 1px, transparent 1px);
+background-size:90px 90px;
+animation:gridMove 60s linear infinite;
+z-index:-5;
 }
 
-@keyframes move{
+@keyframes gridMove{
 from{transform:translateY(0);}
-to{transform:translateY(80px);}
+to{transform:translateY(90px);}
+}
+
+/* BACKGROUND NOISE */
+.noise{
+position:fixed;
+inset:0;
+background:url("https://grainy-gradients.vercel.app/noise.svg");
+opacity:0.04;
+z-index:-4;
 }
 
 /* PARTICLES */
 canvas{
 position:fixed;
 inset:0;
-z-index:-4;
-opacity:0.25;
+z-index:-6;
+opacity:0.2;
 }
 
 /* TOP BAR */
@@ -52,24 +61,24 @@ opacity:0.25;
 position:fixed;
 top:0;
 width:100%;
-background:rgba(0,0,0,0.85);
-border-bottom:1px solid rgba(0,255,120,0.08);
-padding:10px 20px;
 display:flex;
 justify-content:space-between;
-font-size:12px;
-color:#8a8a8a;
+padding:10px 20px;
+font-size:11px;
+color:#777;
+border-bottom:1px solid rgba(0,255,120,0.05);
+background:#000;
 z-index:999;
 }
 
 /* TICKER */
 .ticker{
 position:fixed;
-top:40px;
+top:35px;
 width:100%;
-white-space:nowrap;
 overflow:hidden;
-border-bottom:1px solid rgba(0,255,120,0.06);
+white-space:nowrap;
+border-bottom:1px solid rgba(0,255,120,0.04);
 background:#000;
 z-index:998;
 }
@@ -77,10 +86,10 @@ z-index:998;
 .ticker span{
 display:inline-block;
 padding:10px;
-color:#7CFFB2;
-opacity:0.6;
-animation:scroll 55s linear infinite;
-font-size:12px;
+font-size:11px;
+color:#6dffb3;
+opacity:0.55;
+animation:scroll 70s linear infinite;
 }
 
 @keyframes scroll{
@@ -88,41 +97,57 @@ from{transform:translateX(100%);}
 to{transform:translateX(-100%);}
 }
 
-/* LAYOUT */
+/* MAIN GRID */
 .container{
-padding-top:110px;
-max-width:1400px;
+padding-top:120px;
+max-width:1500px;
 margin:auto;
 }
 
-/* GRID DASHBOARD */
+/* DASHBOARD LAYOUT */
 .dashboard{
 display:grid;
-grid-template-columns:1.4fr 1fr 1fr;
-gap:18px;
+grid-template-columns:1.6fr 1fr 1fr;
+gap:14px;
 padding:20px;
 }
 
 /* PANELS */
 .panel{
-background:rgba(255,255,255,0.02);
-border:1px solid rgba(0,255,120,0.06);
-border-radius:10px;
-padding:15px;
-min-height:220px;
+background:rgba(255,255,255,0.015);
+border:1px solid rgba(0,255,120,0.05);
+border-radius:8px;
+padding:12px;
+min-height:240px;
+position:relative;
+overflow:hidden;
 }
 
-.panel h3{
-font-size:12px;
-color:#7CFFB2;
-margin-bottom:10px;
+.panel::after{
+content:"";
+position:absolute;
+inset:0;
+background:radial-gradient(circle at center, rgba(0,255,120,0.04), transparent 70%);
+opacity:0;
+transition:0.5s;
+}
+
+.panel:hover::after{
+opacity:1;
+}
+
+.title{
+font-size:10px;
 letter-spacing:1px;
+color:#6dffb3;
+margin-bottom:10px;
+opacity:0.8;
 }
 
 /* CHART */
-canvas.chart{
+canvas{
 width:100%;
-height:180px;
+height:200px;
 }
 
 /* HEATMAP */
@@ -133,31 +158,31 @@ gap:6px;
 }
 
 .box{
-height:40px;
-font-size:10px;
+height:45px;
+border-radius:6px;
 display:flex;
 align-items:center;
 justify-content:center;
-border-radius:6px;
-color:#000;
+font-size:9px;
 font-weight:600;
+color:#000;
 }
 
 /* NEWS */
 .news{
+font-size:11px;
+color:#aaa;
 display:flex;
 flex-direction:column;
 gap:8px;
-font-size:11px;
-color:#aaa;
 }
 
 .news div{
-padding:6px;
-border-left:2px solid rgba(0,255,120,0.2);
+padding:5px;
+border-left:2px solid rgba(0,255,120,0.1);
 }
 
-/* KPIs */
+/* KPIS */
 .kpis{
 display:grid;
 grid-template-columns:repeat(4,1fr);
@@ -166,25 +191,27 @@ padding:20px;
 }
 
 .kpi{
-background:rgba(255,255,255,0.02);
-padding:12px;
-border-radius:8px;
+background:rgba(255,255,255,0.015);
 border:1px solid rgba(0,255,120,0.05);
+padding:12px;
+border-radius:6px;
+text-align:center;
 }
 
 .kpi h2{
-color:#7CFFB2;
-font-size:18px;
+color:#6dffb3;
+font-size:16px;
 }
 
 /* WHATSAPP */
 .whatsapp{
 position:fixed;
-bottom:20px;
-right:20px;
-width:50px;
-height:50px;
-z-index:999;
+bottom:18px;
+right:18px;
+width:52px;
+height:52px;
+filter:brightness(1.2);
+opacity:0.9;
 }
 
 </style>
@@ -193,51 +220,53 @@ z-index:999;
 <body>
 
 <div class="grid"></div>
+<div class="noise"></div>
+<canvas id="particles"></canvas>
 
 <div class="topbar">
-<div>HEDGE FUND TERMINAL — LIVE SIMULATION</div>
-<div>GUILHERME MENEZES | SP, BR</div>
+<div>BLACKROCK LEVEL TERMINAL — SIMULATION</div>
+<div>GUILHERME MENEZES | QUANT RESEARCH</div>
 </div>
 
 <div class="ticker">
 <span>
-PETR4 +1.2% VALE3 +0.8% ITUB4 -0.3% IBOV +0.9% BTC +2.4% SPX +0.6% USD -0.2% GOLD +0.3%
+SPX +0.42% | NASDAQ +0.31% | IBOV +0.88% | PETR4 +1.2% | VALE3 +0.7% | BTC +2.1% | USD -0.12% | GOLD +0.18%
 </span>
 </div>
 
 <div class="container">
 
-<!-- KPIs -->
+<!-- KPIS -->
 <div class="kpis">
-<div class="kpi"><h2 id="a">0</h2><p>Alpha</p></div>
-<div class="kpi"><h2 id="b">0</h2><p>Sharpe</p></div>
-<div class="kpi"><h2 id="c">0</h2><p>Vol</p></div>
-<div class="kpi"><h2 id="d">0</h2><p>Return</p></div>
+<div class="kpi"><h2 id="a">0</h2><p>ALPHA</p></div>
+<div class="kpi"><h2 id="b">0</h2><p>SHARPE</p></div>
+<div class="kpi"><h2 id="c">0</h2><p>VOL</p></div>
+<div class="kpi"><h2 id="d">0</h2><p>RETURN</p></div>
 </div>
 
 <!-- DASHBOARD -->
 <div class="dashboard">
 
-<!-- CHART -->
+<!-- MARKET -->
 <div class="panel">
-<h3>MARKET PRICE ACTION</h3>
+<div class="title">MARKET STRUCTURE</div>
 <canvas id="chart"></canvas>
 </div>
 
 <!-- HEATMAP -->
 <div class="panel">
-<h3>SECTOR HEATMAP</h3>
+<div class="title">GLOBAL EQUITY HEATMAP</div>
 <div class="heatmap" id="heat"></div>
 </div>
 
 <!-- NEWS -->
 <div class="panel">
-<h3>MARKET NEWS FLOW</h3>
+<div class="title">MACRO NEWS FLOW</div>
 <div class="news">
-<div>Inflation data impacts global equities</div>
-<div>Brazil banks outperform index</div>
-<div>Tech stocks stabilize after volatility</div>
-<div>Oil prices react to supply shift</div>
+<div>US inflation data signals policy shift</div>
+<div>Brazil banks outperform global peers</div>
+<div>Energy sector volatility increases</div>
+<div>Tech sector stabilizes after correction</div>
 </div>
 </div>
 
@@ -252,26 +281,24 @@ PETR4 +1.2% VALE3 +0.8% ITUB4 -0.3% IBOV +0.9% BTC +2.4% SPX +0.6% USD -0.2% GOL
 
 <script>
 
-/* KPI COUNTER */
-function count(id,val){
+/* KPIs */
+function count(id,v){
 let el=document.getElementById(id);
 let i=0;
 let t=setInterval(()=>{
-i+=val/100;
-if(i>=val){i=val;clearInterval(t);}
-el.innerText=i.toFixed(1);
-},20);
+i+=v/120;
+if(i>=v){i=v;clearInterval(t);}
+el.innerText=i.toFixed(2);
+},25);
 }
 
-count("a",1.8);
-count("b",1.4);
-count("c",12.3);
-count("d",8.7);
+count("a",1.72);
+count("b",1.41);
+count("c",11.8);
+count("d",7.6);
 
 /* HEATMAP */
 const stocks=["PETR4","VALE3","ITUB4","BBDC4","BBAS3","WEGE3","MGLU3","B3SA3"];
-
-const heat=document.getElementById("heat");
 
 stocks.forEach(s=>{
 let d=document.createElement("div");
@@ -283,26 +310,26 @@ d.innerText=s;
 d.style.background =
 v>0.5
 ?`rgba(0,255,120,${v})`
-:`rgba(255,50,50,${v})`;
+:`rgba(255,60,60,${v})`;
 
-heat.appendChild(d);
+document.getElementById("heat").appendChild(d);
 });
 
-/* CHART (SLOW REALISTIC MOVE) */
+/* CHART (SLOW REAL MARKET BEHAVIOR) */
 const c=document.getElementById("chart").getContext("2d");
 
-let data=Array.from({length:60},()=>50);
+let data=Array.from({length:80},()=>50);
 
 function draw(){
 
-c.clearRect(0,0,600,200);
+c.clearRect(0,0,800,200);
 
-data.push(50 + Math.sin(Date.now()/3000)*8 + Math.random()*3);
+data.push(50 + Math.sin(Date.now()/4000)*6 + Math.random()*2);
 data.shift();
 
 c.beginPath();
-c.strokeStyle="#7CFFB2";
-c.lineWidth=1;
+c.strokeStyle="#6dffb3";
+c.lineWidth=0.8;
 
 data.forEach((v,i)=>{
 let x=i*10;
@@ -314,10 +341,47 @@ else c.lineTo(x,y);
 
 c.stroke();
 
-setTimeout(draw,180);
+setTimeout(draw,220);
 }
 
 draw();
+
+/* PARTICLES */
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+
+canvas.width=innerWidth;
+canvas.height=innerHeight;
+
+let particles=[];
+
+for(let i=0;i<40;i++){
+particles.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*1,
+dx:(Math.random()-0.5)*0.15,
+dy:(Math.random()-0.5)*0.15
+});
+}
+
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+particles.forEach(p=>{
+p.x+=p.dx;
+p.y+=p.dy;
+
+ctx.fillStyle="rgba(109,255,179,0.15)";
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+ctx.fill();
+});
+
+requestAnimationFrame(animate);
+}
+
+animate();
 
 </script>
 
